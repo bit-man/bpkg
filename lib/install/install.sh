@@ -193,6 +193,19 @@ bpkg_install () {
   return 0
 }
 
+bpkg_solve_uri() {
+  local git_remote=$1
+  local user=$2
+  local name=$3
+  local version=$4
+
+  if [[ "$git_remote" == https://gitlab*  ]]; then
+    echo "$user/$name/-/raw/$version"
+  else
+    echo "$user/$name/$version"
+  fi
+}
+
 ## try to install a package from a specific remote
 ## returns values:
 ##   0: success
@@ -284,7 +297,7 @@ bpkg_install_from_remote () {
       git_remote=${git_remote/https:\/\//https:\/\/$token:x-oauth-basic@}
     fi
   else
-    uri="/$user/$name/$version"
+    uri=$(bpkg_solve_uri "$git_remote" $user $name $version)
   fi
 
   ## clean up extra slashes in uri
@@ -306,7 +319,7 @@ bpkg_install_from_remote () {
   url="$remote/$uri"
   local nonce="$(date +%s)"
 
-  if url_exists "$url/bpkg.json?$nonce" "$auth_param"; then
+    if url_exists "$url/bpkg.json?$nonce" "$auth_param"; then
     ## read 'bpkg.json'
     json=$(fetch "$url/bpkg.json?$nonce" "$auth_param")
     package_file='bpkg.json'
