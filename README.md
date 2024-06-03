@@ -173,6 +173,20 @@ bpkg package
 ["install"]     "make install"
 ```
 
+### Configuration
+
+Github and Gitlab bash repositories have builtin support but in case other git repository needs to be searched for add the next lines to `$HOME/.bpkgrc` configuration file using the BPKG_REMOTES for raw file access and BPKG_GIT_REMOTES for git access
+
+```
+BPKG_REMOTES=("https://raw.githubusercontent.com")
+BPKG_REMOTES+=("https://gitlab.com")
+BPKG_REMOTES+=("https://my-git-raw-access.com")
+
+BPKG_GIT_REMOTES=("https://github.com")
+BPKG_GIT_REMOTES+=("https://gitlab.com")
+BPKG_GIT_REMOTES+=("https://my-git.com")
+```
+
 ## Package details
 
 Here we lay down some info on the structure of a package.
