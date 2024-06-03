@@ -297,7 +297,7 @@ bpkg_install_from_remote () {
       git_remote=${git_remote/https:\/\//https:\/\/$token:x-oauth-basic@}
     fi
   else
-    uri=$(bpkg_solve_uri "$git_remote" $user $name $version)
+    uri=$(bpkg_solve_uri "$git_remote" "$user" "$name" "$version")
   fi
 
   ## clean up extra slashes in uri
