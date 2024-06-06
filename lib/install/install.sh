@@ -16,6 +16,9 @@ bpkg_exec_or_exit bpkg-realpath &&
 bpkg_exec_or_exit bpkg-getdeps &&
   source "$(which bpkg-getdeps)"
 
+bpkg_exec_or_exit bpkg-url &&
+  source "$(which bpkg-url)"
+
 bpkg_initrc
 
 let prevent_prune=0
@@ -191,19 +194,6 @@ bpkg_install () {
   fi
 
   return 0
-}
-
-bpkg_solve_uri() {
-  local git_remote=$1
-  local user=$2
-  local name=$3
-  local version=$4
-
-  if [[ "$git_remote" == https://gitlab*  ]]; then
-    echo "$user/$name/-/raw/$version"
-  else
-    echo "$user/$name/$version"
-  fi
 }
 
 ## try to install a package from a specific remote
