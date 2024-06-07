@@ -5,7 +5,7 @@ if [ -z "${BPKG_URL}" ]; then
 
   ## Collection of shared bpkg functions
 
-  bpkg_solve_uri() {
+  bpkg_resolve_uri_default() {
     local git_remote=$1
     local user=$2
     local name=$3
@@ -18,5 +18,14 @@ if [ -z "${BPKG_URL}" ]; then
     fi
   }
 
-  export -f bpkg_solve_uri
+  bpkg_resolve_uri() {
+    [[ $(type -t bpkg_resolve_uri_pathspec) == function ]] && \
+      bpkg_resolve_uri_pathspec "$@" 
+    # shellcheck disable=SC2181
+    [[ $? -eq 0 ]] && return 
+    bpkg_resolve_uri_default "$@"
+  }
+
+  export -f bpkg_resolve_uri
+  export -f bpkg_resolve_uri_default
 fi
