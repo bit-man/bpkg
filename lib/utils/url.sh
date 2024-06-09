@@ -19,11 +19,11 @@ if [ -z "${BPKG_URL}" ]; then
   }
 
   bpkg_resolve_uri() {
-    [[ $(type -t bpkg_resolve_uri_pathspec) == function ]] && \
-      bpkg_resolve_uri_pathspec "$@" 
-    # shellcheck disable=SC2181
-    [[ $? -eq 0 ]] && return 
-    bpkg_resolve_uri_default "$@"
+    if [[ $(type -t bpkg_resolve_uri_pathspec) == function ]]; then
+      bpkg_resolve_uri_pathspec "$@" || bpkg_resolve_uri_default "$@"
+    else
+      bpkg_resolve_uri_default "$@"
+    fi
   }
 
   export -f bpkg_resolve_uri
