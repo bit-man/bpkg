@@ -1,3 +1,5 @@
+# shellcheck disable=SC2317,SC2148
+
 Describe 'url.sh'
   Include lib/utils/url.sh
 
