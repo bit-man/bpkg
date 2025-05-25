@@ -310,7 +310,7 @@ bpkg_install_from_remote () {
   url="$remote/$uri"
   local nonce="$(date +%s)"
 
-    if url_exists "$url/bpkg.json?$nonce" "$auth_param"; then
+  if url_exists "$url/bpkg.json?$nonce" "$auth_param"; then
     ## read 'bpkg.json'
     json=$(fetch "$url/bpkg.json?$nonce" "$auth_param")
     package_file='bpkg.json'
